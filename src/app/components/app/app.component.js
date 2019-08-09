@@ -48,7 +48,7 @@ export class App {
             });
             self.currentUser = profile;
             const person = new blockstack.Person(profile);
-            console.log(profile);
+            console.log('profile', profile);
             self.heading.innerHTML = person.name();
             self.avatar.setAttribute('src', person.avatarUrl());
             // document.getElementById('section-1').style.display = 'none'
