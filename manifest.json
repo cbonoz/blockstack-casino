@@ -1,0 +1,10 @@
+{
+  "name": "Blockstack Casino",
+  "start_url": "localhost:8080",
+  "description": "A Blockstack casino game",
+  "icons": [{
+    "src": "https://www.materialui.co/materialIcons/places/casino_black_192x192.png",
+    "sizes": "192x192",
+    "type": "image/png"
+  }]
+}

@@ -3,10 +3,13 @@
     "version": "1.0.0",
     "description": "🎰 Blockstack Casino - Prizes stored on Blockchain!",
     "license": "MIT",
+    "author": {
+        "name": "Chris Buonocore"
+    },
     "main": "index.js",
     "scripts": {
         "start": "npm run start:dev",
-        "start:dev": "webpack-dev-server --mode development --hot --display-error-details --progress --content-base src/app/templates",
+        "start:dev": "webpack-dev-server --mode development --hot --display-error-details --progress",
         "start:prod": "webpack-dev-server --mode production --hot --display-error-details --progress",
         "build": "npm run build:prod",
         "build:dev": "webpack --mode development --display-error-details --progress",
@@ -22,6 +25,7 @@
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "dependencies": {
+        "blockstack": "^19.2.5",
         "core-js": "^3.0.1"
     },
     "devDependencies": {
