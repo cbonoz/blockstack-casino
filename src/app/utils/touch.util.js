@@ -21,12 +21,13 @@ function invokeCallback() {
 export function setGlobalClickAndTabHandler(cb) {
     callback = cb;
 
+    const main = document.querySelector('#main');
     if (IS_IOS) {
-        document.ontouchstart = startTap;
-        document.ontouchmove = stopTap;
-        document.ontouchcancel = stopTap;
-        document.ontouchend = invokeCallback;
+        main.ontouchstart = startTap;
+        main.ontouchmove = stopTap;
+        main.ontouchcancel = stopTap;
+        main.ontouchend = invokeCallback;
     } else {
-        document.onclick = cb;
+        main.onclick = cb;
     }
 }

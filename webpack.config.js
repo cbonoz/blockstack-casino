@@ -124,11 +124,11 @@ module.exports = (env, argv) => {
             },
 
             minimizer: PROD ? [
-                new UglifyJsPlugin({
-                    cache: true,
-                    parallel: true,
-                    sourceMap: false,
-                }),
+                // new UglifyJsPlugin({
+                //     cache: true,
+                //     parallel: true,
+                //     sourceMap: false,
+                // }),
                 // Might not be needed with Webpack 5:
                 new OptimizeCSSAssetsPlugin({}),
             ] : [],

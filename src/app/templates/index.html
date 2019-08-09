@@ -3,13 +3,20 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
 </head>
 
 <body class="app__base">
 
     <header class="app__header">
         <h1 class="app__title"><span role="img" aria-label="Slot Machine">🎰</span> Blockstack Casino</h1>
-
+        <div class="app__user">
+            <button id='login' type="button" class="btn btn-success">Login with Blockstack</button>
+            <div id='heading-name'>qqq</div>
+            <div id='avatar-image'></div>
+        </div>
         <ul class="app__state">
             <li class="app__prop">
                 <span class="app__icon" role="img" aria-label="Coins">💶</span>
@@ -27,6 +34,7 @@
     </header>
 
     <main class="app__main" id="main">
+  
         <section class="sm__base">
             <div class="sm__display sm__display--background"></div>
             <div class="sm__reelsContainer"></div>
@@ -35,6 +43,10 @@
     </main>
 
     <footer class="app__footer">
+            <a class="app__link" href="https://github.com/cbonoz/blockstack-casino" target="_blank">
+                <span class="app__linkIcon" role="img" aria-label="Source Code">‍Click Wheel to Spin!</span>
+                <span class="app__linkUnderline">Check it out on GitHub</span>
+            </a>
     </footer>
 
 </body>

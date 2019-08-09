@@ -12,6 +12,9 @@ export class App {
     static S_JACKPOT = '#jackpot'
     static S_SPINS = '#spins'
     static S_MAIN = '#main'
+    static S_LOGIN = '#login'
+    static S_HEADING = '#heading-name'
+    static S_AVATAR = '#avatar-image'
 
     // Misc.:
     static ONE_DAY = 1000 * 60 * 60 * 24
@@ -21,6 +24,11 @@ export class App {
     jackpotElement = document.querySelector(App.S_JACKPOT)
     spinsElement = document.querySelector(App.S_SPINS)
     mainElement = document.querySelector(App.S_MAIN)
+    login = document.querySelector(App.S_LOGIN)
+    heading = document.querySelector(App.S_HEADING)
+    avatar = document.querySelector(App.S_AVATAR)
+
+    currentUser = null
 
     // TODO: Pull these from blockstack gaia storage.
     coins = parseInt(localStorage.coins, 10) || 100
@@ -31,35 +39,38 @@ export class App {
     // Main app.
     constructor() {
         const now = Date.now();
+        const self = this;
 
-        // document.getElementById('signin-button').addEventListener('click', function() {
-        //   blockstack.redirectToSignIn()
-        // })
+        function showProfile(profile) {
+            self.login.innerHTML = 'Logout';
+            self.login.addEventListener('click', () => {
+                blockstack.signUserOut(window.location.origin);
+            });
+            self.currentUser = profile;
+            const person = new blockstack.Person(profile);
+            console.log(profile);
+            self.heading.innerHTML = person.name();
+            self.avatar.setAttribute('src', person.avatarUrl());
+            // document.getElementById('section-1').style.display = 'none'
+            // document.getElemntById('section-2').style.display = 'block'
+        }
 
-        // document.getElementById('signout-button').addEventListener('click', function() {
-        //     blockstack.signUserOut(window.location.origin)
-        // })
-        // function showProfile(profile) {
-        //     var person = new blockstack.Person(profile)
-        //     document.getElementById('heading-name').innerHTML = person.name()
-        //     document.getElementById('avatar-image').setAttribute('src', person.avatarUrl())
-        //     document.getElementById('section-1').style.display = 'none'
-        //     document.getElementById('section-2').style.display = 'block'
-        //   }
-
-        //   if (blockstack.isUserSignedIn()) {
-        //     const userData = blockstack.loadUserData()
-        //      showProfile(userData.profile)
-        //    } else if (blockstack.isSignInPending()) {
-        //      blockstack.handlePendingSignIn()
-        //      .then(userData => {
-        //        showProfile(userData.profile)
-        //      })
-        //    }
+        if (blockstack.isUserSignedIn()) {
+            const userSession = blockstack.loadUserData();
+            showProfile(userSession.profile);
+        } else if (blockstack.isSignInPending()) {
+            blockstack.handlePendingSignIn().then((userSession) => {
+                showProfile(userSession.profile);
+            });
+        } else {
+            this.login.innerHTML = 'Login with Blockstack';
+            this.login.addEventListener('click', () => {
+                blockstack.redirectToSignIn();
+            });
+        }
 
         if (now - this.lastSpin >= App.ONE_DAY) {
-            localStorage.jackpot = this.jackpot
-                = Math.max(500, this.jackpot - 500 + Math.random() * 1000) | 0;
+            localStorage.jackpot = this.jackpot = Math.max(500, this.jackpot - 500 + Math.random() * 1000) | 0;
             localStorage.lastSpin = now;
         }
 
@@ -88,19 +99,17 @@ export class App {
 
         const cheat = () => {
             slotMachine.speed = originalSpeed / 100;
-            confirmation
-                = 'Ok, really... Last chance. Do yo want to go back to normal mode? 😠';
+            confirmation = 'Ok, really... Last chance. Do yo want to go back to normal mode? 😠';
             yes = normal; // eslint-disable-line no-use-before-define
             no = wait;
 
             console.log('Ok, but we are calling the cops... 🚔');
-            console.log("Do you want to stop this before it's too late?");
+            console.log('Do you want to stop this before it\'s too late?');
         };
 
         const normal = () => {
             slotMachine.speed = originalSpeed;
-            confirmation
-                = "I'm sure you are gonna like it...? Wanna play in God mode? 😏 💰";
+            confirmation = 'I\'m sure you are gonna like it...? Wanna play in God mode? 😏 💰';
             yes = cheat;
             no = wait;
 
@@ -110,12 +119,8 @@ export class App {
 
         normal();
 
-        const yesGetter = () => {
-            yes();
-        };
-        const noGetter = () => {
-            no();
-        };
+        const yesGetter = () => { yes(); };
+        const noGetter = () => { no(); };
 
         Object.defineProperties(window, {
             yes: { get: yesGetter },
@@ -128,19 +133,23 @@ export class App {
     }
 
     handleUseCoin() {
+        if (!this.currentUser) {
+            alert('Login with Blockstack to Play!');
+            return false; // not able to spin
+        }
         localStorage.coins = this.coins = Math.max(this.coins - 1, 0) || 100;
         localStorage.jackpot = ++this.jackpot;
         localStorage.spins = ++this.spins;
         localStorage.lastSpin = this.lastSpin = Date.now();
 
         this.refreshView();
+        return true;
     }
 
     handleGetPrice(fixedPrize, jackpotPercentage) {
         const price = fixedPrize + Math.round(jackpotPercentage * this.jackpot);
 
-        localStorage.jackpot = this.jackpot
-            = Math.max(this.jackpot - price, 0) || 1000;
+        localStorage.jackpot = this.jackpot = Math.max(this.jackpot - price, 0) || 1000;
         localStorage.coins = this.coins += price;
 
         this.refreshView();

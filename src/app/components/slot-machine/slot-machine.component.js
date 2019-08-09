@@ -117,7 +117,10 @@ export class SlotMachine {
     }
 
     start() {
-        this.handleUseCoin();
+        const canSpin = this.handleUseCoin();
+        if (!canSpin) {
+            return;
+        }
         this.currentCombination = [];
         this.currentPrize = null;
         this.currentReel = 0;

@@ -25,6 +25,13 @@
         text-align: center;
     }
 
+    &__user {
+        text-align: center;
+        margin: 0 auto;
+        font-size: 24px;
+        line-height: 24px; 
+    }
+
     &__state {
         margin: 0;
         list-style: none;
@@ -96,3 +103,10 @@
         }
     }
 }
+
+#login {
+    // text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
