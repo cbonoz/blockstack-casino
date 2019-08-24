@@ -41,26 +41,27 @@ export class App {
         const now = Date.now();
         const self = this;
 
-        function showProfile(profile) {
+        function showProfile(userSession) {
+            const profile = userSession.profile;
             self.login.innerHTML = 'Logout';
             self.login.addEventListener('click', () => {
                 blockstack.signUserOut(window.location.origin);
             });
-            self.currentUser = profile;
+            self.currentUser = userSession;
             const person = new blockstack.Person(profile);
             console.log('profile', profile);
-            self.heading.innerHTML = person.name();
-            self.avatar.setAttribute('src', person.avatarUrl());
+            self.heading.innerHTML = person.name() || userSession.username
+            || self.avatar.setAttribute('src', person.avatarUrl());
             // document.getElementById('section-1').style.display = 'none'
             // document.getElemntById('section-2').style.display = 'block'
         }
 
         if (blockstack.isUserSignedIn()) {
             const userSession = blockstack.loadUserData();
-            showProfile(userSession.profile);
+            showProfile(userSession);
         } else if (blockstack.isSignInPending()) {
             blockstack.handlePendingSignIn().then((userSession) => {
-                showProfile(userSession.profile);
+                showProfile(userSession);
             });
         } else {
             this.login.innerHTML = 'Login with Blockstack';

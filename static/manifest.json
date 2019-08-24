@@ -1,6 +1,7 @@
 {
   "name": "Blockstack Casino",
-  "start_url": "blockstackcasino.netlify.com",
+  "start_url_prod": "blockstackcasino.netlify.com",
+  "start_url": "localhost:8080",
   "description": "A Blockstack casino game",
   "icons": [{
     "src": "https://www.materialui.co/materialIcons/places/casino_black_192x192.png",
