@@ -4,15 +4,16 @@
 </p>
 <h1 align="center">Blockstack Casino</h1>
 <br />
----
 
 A blockstack roulette casino game. Can you beat your hi-score?
 
-### Live site
+## Live site
 
 <a target="_blank" href="https://blockstackcasino.netlify.com/">https://blockstackcasino.netlify.com/</a>
 
-### Running locally
+## Running Blockstack Casino locally
+
+Clone the project
 
 1. Update `manifest.json` to `localhost:8080`
 2. `yarn`
