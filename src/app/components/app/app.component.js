@@ -26,6 +26,8 @@ export class App {
   static S_LOGIN = "#login"
   static S_HEADING = "#heading-name"
   static S_AVATAR = "#avatar-image"
+  static S_HIGH_SCORE = "#high-score"
+
   static BASE_URL = "localhost:8080"
 
   // Misc.:
@@ -39,6 +41,7 @@ export class App {
   login = document.querySelector(App.S_LOGIN)
   heading = document.querySelector(App.S_HEADING)
   avatar = document.querySelector(App.S_AVATAR)
+  highScoreElement = document.querySelector(App.S_HIGH_SCORE)
 
   // TODO: Pull these from blockstack gaia storage.
   lastSpin = localStorage.lastSpin || 0
@@ -184,7 +187,8 @@ export class App {
     const state = {
       coins: self.coins,
       jackpot: self.jackpot,
-      spins: self.spins
+      spins: self.spins,
+      highScore: self.highScore
     }
 
     if (!this.loaded) {
@@ -209,6 +213,7 @@ export class App {
     self.coinsElement.innerText = self.coins
     self.jackpotElement.innerText = self.jackpot
     self.spinsElement.innerText = self.spins
+    self.highScoreElement.innerText = `Your high score: ${self.highScore}`
   }
 
   getState() {
@@ -218,6 +223,8 @@ export class App {
       self.coins = status.coins || 100
       self.jackpot = status.jackpot || 1000
       self.spins = status.spins || 0
+      const existingHighScore = status.highScore || self.coins
+      self.highScore = Math.max(existingHighScore, self.coins)
       self.refreshView()
     })
   }
