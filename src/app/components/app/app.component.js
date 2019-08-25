@@ -56,7 +56,12 @@ export class App {
       })
       const person = new blockstack.Person(profile)
       console.log("profile", profile)
-      self.heading.innerHTML = person.name() || profile.username
+      let userName = person.name() || profile.username
+      if (userName.indexOf('.') !== -1) {
+          userName = userName.split('.')[0]
+      }
+
+      self.heading.innerHTML = `Welcome, ${userName}!`
       self.avatar.setAttribute("src", person.avatarUrl())
       const now = Date.now()
       if (now - self.lastSpin >= App.ONE_DAY) {

@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const StyleLintPlugin = require('stylelint-webpack-plugin');
+// const StyleLintPlugin = require('stylelint-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
@@ -58,12 +58,12 @@ module.exports = (env, argv) => {
                 enforce: 'pre',
                 test: /\.js$/,
                 exclude: /node_modules/,
-                use: {
-                    loader: 'eslint-loader',
-                    options: {
-                        fix: true,
-                    },
-                },
+                // use: {
+                //     loader: 'eslint-loader',
+                //     options: {
+                //         fix: true,
+                //     },
+                // },
             }, {
                 test: /\.js$/,
                 exclude: /node_modules/,
@@ -100,10 +100,10 @@ module.exports = (env, argv) => {
             new MiniCssExtractPlugin({
                 filename: '[name].css',
             }),
-            new StyleLintPlugin({
-                syntax: 'scss',
-                fix: true,
-            }),
+            // new StyleLintPlugin({
+            //     syntax: 'scss',
+            //     fix: true,
+            // }),
             new CopyWebpackPlugin([{
                 from: 'static',
             }]),
