@@ -15,11 +15,11 @@ A blockstack roulette casino game. Can you beat your hi-score?
 
 Clone the project
 
-1. Update `manifest.json` to `localhost:8080`
+1. Update `manifest.json` `start_url` to `localhost:8080`
 2. `yarn`
 3. `yarn start`
 
-The web app should now be available on localhost:8080/index.html`
+The web app should now be available on `localhost:8080/index.html`
 
 
 
