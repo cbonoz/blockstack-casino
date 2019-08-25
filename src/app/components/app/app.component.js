@@ -5,6 +5,16 @@ import { SlotMachine } from '../slot-machine/slot-machine.component';
 
 import './app.style.scss';
 
+const PUT_OPTIONS = {
+    encrypt: true,
+};
+const GET_OPTIONS = {
+    decrypt: true,
+};
+const STATE_FILE = 'status.json';
+
+const appConfig = new blockstack.AppConfig(['store_write', 'publish_data']);
+const userSession = new blockstack.UserSession({ appConfig });
 export class App {
 
     // CSS selectors:
@@ -15,6 +25,7 @@ export class App {
     static S_LOGIN = '#login'
     static S_HEADING = '#heading-name'
     static S_AVATAR = '#avatar-image'
+    static BASE_URL = 'localhost:8080'
 
     // Misc.:
     static ONE_DAY = 1000 * 60 * 60 * 24
@@ -28,52 +39,47 @@ export class App {
     heading = document.querySelector(App.S_HEADING)
     avatar = document.querySelector(App.S_AVATAR)
 
-    currentUser = null
-
     // TODO: Pull these from blockstack gaia storage.
-    coins = parseInt(localStorage.coins, 10) || 100
-    jackpot = parseInt(localStorage.jackpot, 10) || 1000
-    spins = parseInt(localStorage.spins, 10) || 0
     lastSpin = localStorage.lastSpin || 0
+    loaded = false
 
     // Main app.
     constructor() {
-        const now = Date.now();
         const self = this;
 
-        function showProfile(userSession) {
-            const profile = userSession.profile;
+        function showProfile() {
+            const profile = userSession.loadUserData();
             self.login.innerHTML = 'Logout';
             self.login.addEventListener('click', () => {
-                blockstack.signUserOut(window.location.origin);
+                userSession.signUserOut(window.location.origin);
             });
-            self.currentUser = userSession;
             const person = new blockstack.Person(profile);
             console.log('profile', profile);
-            self.heading.innerHTML = person.name() || userSession.username
-            || self.avatar.setAttribute('src', person.avatarUrl());
+            self.heading.innerHTML = person.name() || profile.username;
+            self.avatar.setAttribute('src', person.avatarUrl());
+            const now = Date.now();
+            if (now - self.lastSpin >= App.ONE_DAY) {
+                self.jackpot = Math.max(500, self.jackpot - 500 + Math.random() * 1000) | 0;
+                localStorage.lastSpin = now;
+            }
+            self.saveState();
             // document.getElementById('section-1').style.display = 'none'
             // document.getElemntById('section-2').style.display = 'block'
         }
 
-        if (blockstack.isUserSignedIn()) {
-            const userSession = blockstack.loadUserData();
-            showProfile(userSession);
-        } else if (blockstack.isSignInPending()) {
-            blockstack.handlePendingSignIn().then((userSession) => {
-                showProfile(userSession);
+        if (userSession.isUserSignedIn()) {
+            showProfile();
+        } else if (userSession.isSignInPending()) {
+            userSession.handlePendingSignIn().then(() => {
+                showProfile();
             });
         } else {
             this.login.innerHTML = 'Login with Blockstack';
             this.login.addEventListener('click', () => {
-                blockstack.redirectToSignIn();
+                userSession.redirectToSignIn();
             });
         }
 
-        if (now - this.lastSpin >= App.ONE_DAY) {
-            localStorage.jackpot = this.jackpot = Math.max(500, this.jackpot - 500 + Math.random() * 1000) | 0;
-            localStorage.lastSpin = now;
-        }
 
         // eslint-disable-next-line no-new
         const slotMachine = new SlotMachine(
@@ -129,37 +135,80 @@ export class App {
             Yes: { get: yesGetter },
             No: { get: noGetter },
         });
-
-        this.refreshView();
     }
 
     handleUseCoin() {
-        if (!this.currentUser) {
+        if (!userSession.isUserSignedIn()) {
             alert('Login with Blockstack to Play!');
             return false; // not able to spin
         }
-        localStorage.coins = this.coins = Math.max(this.coins - 1, 0) || 100;
-        localStorage.jackpot = ++this.jackpot;
-        localStorage.spins = ++this.spins;
-        localStorage.lastSpin = this.lastSpin = Date.now();
 
-        this.refreshView();
+        if (this.coins === 1) {
+            alert('This would in theory be your last coin, but don\'t worry though - we\'ll give you more to continue :)');
+        }
+
+        this.coins = Math.max(this.coins - 1, 0) || 100;
+        ++this.jackpot;
+        ++this.spins;
+        this.lastSpin = Date.now();
+
+        this.saveState();
         return true;
     }
 
     handleGetPrice(fixedPrize, jackpotPercentage) {
         const price = fixedPrize + Math.round(jackpotPercentage * this.jackpot);
 
-        localStorage.jackpot = this.jackpot = Math.max(this.jackpot - price, 0) || 1000;
-        localStorage.coins = this.coins += price;
+        this.jackpot = Math.max(this.jackpot - price, 0) || 1000;
+        this.coins += price;
 
-        this.refreshView();
+        this.saveState();
+    }
+
+    saveState() {
+        const self = this;
+        const state = {
+            coins: self.coins,
+            jackpot: self.jackpot,
+            spins: self.spins,
+        };
+
+        if (!this.loaded) {
+            self.getState();
+            this.loaded = true;
+            return;
+        }
+
+
+        if (userSession.isUserSignedIn()) {
+            userSession.putFile(STATE_FILE, JSON.stringify(state), PUT_OPTIONS).then(() => {
+                self.getState();
+
+            });
+        } else {
+            alert('Unable to load data, user session expired. Please login again.');
+        }
     }
 
     refreshView() {
-        this.coinsElement.innerText = this.coins;
-        this.jackpotElement.innerText = this.jackpot;
-        this.spinsElement.innerText = this.spins;
+        const self = this;
+        self.coinsElement.innerText = self.coins;
+        self.jackpotElement.innerText = self.jackpot;
+        self.spinsElement.innerText = self.spins;
+    }
+
+
+    getState() {
+        const self = this;
+        userSession.getFile(STATE_FILE, GET_OPTIONS).then((file) => {
+            const status = JSON.parse(file || '{}');
+            self.coins = status.coins || 100;
+            self.jackpot = status.jackpot || 1000;
+            self.spins = status.spins || 0;
+            self.refreshView();
+        });
+
     }
 
 }
+
