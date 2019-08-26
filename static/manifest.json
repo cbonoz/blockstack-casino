@@ -1,6 +1,6 @@
 {
   "name": "Blockstack Casino",
-  "start_url": "blockstackcasino.netlify.com",
+  "start_url": "blockstackcasino.com",
   "start_url_dev": "localhost:8080",
   "description": "A Blockstack casino game",
   "icons": [{
