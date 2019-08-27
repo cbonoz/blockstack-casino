@@ -9,7 +9,7 @@ A blockstack roulette casino game. Can you beat your hi-score?
 
 ## Live site
 
-<a target="_blank" href="https://blockstackcasino.netlify.com/">https://blockstackcasino.netlify.com/</a>
+<a target="_blank" href="https://blockstackcasino.com/">https://blockstackcasino.com/</a>
 
 ## Running Blockstack Casino locally
 
