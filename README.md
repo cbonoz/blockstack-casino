@@ -1,5 +1,5 @@
 <p align='center'>
-	<img src='./img/roulette.png'/>
+	<img src='./img/roulette.png' width=600/>
 </p>
 
 <h1 align="center">Blockstack Casino</h1>
