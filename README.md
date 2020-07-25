@@ -5,15 +5,15 @@
 <h1 align="center">Blockstack Casino</h1>
 <br />
 
-A blockchain roulette casino game. Can you beat your hi-score?
+A blockchain roulette casino game.
+
+Using a mixture of javascript animations and blockchain frameworks, blockstack casino is a roulette game that saves and records your game history on blockstack distributed data storage. Each time a balance or hi-score is updated, the data gets posted back to the underlying blockchain.
+
+You'll need to authenticate with a blockstack account, an open-source blockchain framework for building decentralized apps and smart contracts, in order to track your score.
 
 ## Try it out!
 
 <a target="_blank" href="https://blockstackcasino.com/">https://blockstackcasino.com/</a>
-
-You'll need to authenticate with a blockstack account (an open-source blockchain framework for building decentralized apps and smart contracts) in order to track your score.
-
-Scores are saved and preserved on blockstack distributed data storage. Each time the hi-score is updated, the score gets posted back on the underlying blockchain.
 
 ## Running Blockstack Casino locally
 
