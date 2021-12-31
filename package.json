@@ -1,78 +1,78 @@
 {
-    "name": "blockstack-casino",
-    "version": "1.0.0",
-    "description": "🎰 Blockstack Casino - Prizes stored on Blockchain!",
-    "license": "MIT",
-    "author": {
-        "name": "Chris Buonocore"
-    },
-    "main": "index.js",
-    "scripts": {
-        "start": "npm run start:dev",
-        "start:dev": "webpack-dev-server --mode development --hot --display-error-details --progress",
-        "start:prod": "webpack-dev-server --mode production --hot --display-error-details --progress",
-        "build": "npm run build:prod",
-        "build:dev": "webpack --mode development --display-error-details --progress",
-        "build:prod": "webpack --mode production --display-error-details --progress",
-        "deploy": "npm run build:prod && gh-pages -d dist",
-        "eslint": "eslint src",
-        "eslint:fix": "eslint --fix src",
-        "stylelint": "stylelint src",
-        "stylelint:fix": "stylelint --fix src",
-        "clean": "npm run distclean && npm run nodeclean",
-        "distclean": "rm -rf dist",
-        "nodeclean": "rm -rf node_modules",
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "dependencies": {
-        "blockstack": "^19.2.5",
-        "core-js": "^3.0.1"
-    },
-    "devDependencies": {
-        "@babel/core": "^7.4.4",
-        "@babel/plugin-proposal-class-properties": "^7.4.4",
-        "@babel/plugin-proposal-decorators": "^7.4.4",
-        "@babel/preset-env": "^7.4.4",
-        "autoprefixer": "^9.5.1",
-        "babel-eslint": "^10.0.1",
-        "babel-loader": "^8.0.5",
-        "copy-webpack-plugin": "^5.0.3",
-        "css-loader": "^2.1.1",
-        "eslint": "^5.16.0",
-        "eslint-config-airbnb-base": "^13.1.0",
-        "eslint-loader": "^2.1.2",
-        "eslint-plugin-babel": "^5.3.0",
-        "eslint-plugin-import": "^2.17.2",
-        "gh-pages": "^2.0.1",
-        "html-loader": "^0.5.5",
-        "html-webpack-inline-source-plugin": "^1.0.0-beta.2",
-        "html-webpack-plugin": "^4.0.0-beta.4",
-        "mini-css-extract-plugin": "^0.6.0",
-        "node-sass": "^4.12.0",
-        "optimize-css-assets-webpack-plugin": "^5.0.1",
-        "postcss-loader": "^3.0.0",
-        "sass-loader": "^7.1.0",
-        "stylelint": "^10.0.1",
-        "stylelint-config-airbnb": "0.0.0",
-        "stylelint-order": "^3.0.0",
-        "stylelint-scss": "^3.6.1",
-        "stylelint-webpack-plugin": "^0.10.5",
-        "uglifyjs-webpack-plugin": "^2.1.2",
-        "webpack": "^4.30.0",
-        "webpack-bundle-analyzer": "^3.3.2",
-        "webpack-cli": "^3.3.1",
-        "webpack-dev-server": "^3.3.1"
-    },
-    "postcss": {
-        "plugins": {
-            "autoprefixer": {}
-        }
-    },
-    "browserslist": [
-        "> 0.5%",
-        "last 2 version",
-        "Firefox ESR",
-        "not dead",
-        "iOS >= 9"
-    ]
+  "name": "blockstack-casino",
+  "version": "1.0.0",
+  "description": "🎰 Blockstack Casino - Prizes stored on Blockchain!",
+  "license": "MIT",
+  "author": {
+    "name": "Chris Buonocore"
+  },
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run start:dev",
+    "start:dev": "webpack-dev-server --mode development --hot --display-error-details --progress",
+    "start:prod": "webpack-dev-server --mode production --hot --display-error-details --progress",
+    "build": "npm run build:prod",
+    "build:dev": "webpack --mode development --display-error-details --progress",
+    "build:prod": "webpack --mode production --display-error-details --progress",
+    "deploy": "npm run build:prod && gh-pages -d dist",
+    "eslint": "eslint src",
+    "eslint:fix": "eslint --fix src",
+    "stylelint": "stylelint src",
+    "stylelint:fix": "stylelint --fix src",
+    "clean": "npm run distclean && npm run nodeclean",
+    "distclean": "rm -rf dist",
+    "nodeclean": "rm -rf node_modules",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "blockstack": "21.1.1",
+    "core-js": "3.20.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.4.4",
+    "@babel/plugin-proposal-class-properties": "^7.4.4",
+    "@babel/plugin-proposal-decorators": "^7.4.4",
+    "@babel/preset-env": "^7.4.4",
+    "autoprefixer": "^9.5.1",
+    "babel-eslint": "^10.0.1",
+    "babel-loader": "^8.0.5",
+    "copy-webpack-plugin": "^5.0.3",
+    "css-loader": "^2.1.1",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-loader": "^2.1.2",
+    "eslint-plugin-babel": "^5.3.0",
+    "eslint-plugin-import": "^2.17.2",
+    "gh-pages": "^2.0.1",
+    "html-loader": "^0.5.5",
+    "html-webpack-inline-source-plugin": "^1.0.0-beta.2",
+    "html-webpack-plugin": "^4.0.0-beta.4",
+    "mini-css-extract-plugin": "^0.6.0",
+    "node-sass": "^4.12.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.1",
+    "postcss-loader": "^3.0.0",
+    "sass-loader": "^7.1.0",
+    "stylelint": "^10.0.1",
+    "stylelint-config-airbnb": "0.0.0",
+    "stylelint-order": "^3.0.0",
+    "stylelint-scss": "^3.6.1",
+    "stylelint-webpack-plugin": "^0.10.5",
+    "uglifyjs-webpack-plugin": "^2.1.2",
+    "webpack": "^4.30.0",
+    "webpack-bundle-analyzer": "^3.3.2",
+    "webpack-cli": "^3.3.1",
+    "webpack-dev-server": "^3.3.1"
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "> 0.5%",
+    "last 2 version",
+    "Firefox ESR",
+    "not dead",
+    "iOS >= 9"
+  ]
 }
